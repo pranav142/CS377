@@ -55,7 +55,6 @@ int main() {
         } while (timeout < 0 || timeout > 9);
         // end parsing code
         
-        
         ////////////////////////////////////////////////////////
         //                                                    //
         // TODO: use cmdTokens, count, parallel, and timeout  //
@@ -64,9 +63,30 @@ int main() {
         // /////////////////////////////////////////////////////
         
         // just executes the given command once - REPLACE THIS CODE WITH YOUR OWN
-        execvp(cmdTokens[0], cmdTokens); // replaces the current process with the given program
-        // doesn't return unless the calling failed
-        printf("Can't execute %s\n", cmdTokens[0]); // only reached if running the program failed
+        
+        if (count > 1){ 
+            int cid = fork();
+            for (int i = 1; i <= count; i++){ 
+                if (cid == 0) { 
+                    printf("process_id(pid) = %d \n",getpid());
+                    execvp(cmdTokens[0], cmdTokens);
+
+                    // line only gets executed if above execution doesn't go through
+                    printf("Can't execute %s\n", cmdTokens[0]);
+                }
+                else {
+                    // sleep(1);
+                    waitpid(cid, 0, 0);
+                    cid = fork();
+                }
+            }
+        }
+        else { 
+            execvp(cmdTokens[0], cmdTokens);
+            printf("Can't execute %s\n", cmdTokens[0]);
+        }
+        
+
         exit(1);        
     }
 }
