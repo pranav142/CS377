@@ -117,8 +117,7 @@ int main()
 {
     char cmd[81];        // array of chars (a string)
     char *cmdTokens[20]; // array of strings
-    int count;           // number of times Sequential Execution: For running commands sequentially, the parent process creates a new child process only after the previous one has finished executing or has been terminated. This ensures that each command runs one after the other, in a sequential manner.
-Parallel Execution: In contrast, for parallel execution, the parent process creates all child processes at once. Then it waits for all of them to complete. This allows multiple comto execute command
+    int count;           
     int parallel;        // whether to run in parallel or sequentially
     int timeout;         // max seconds to run set of commands (parallel) or each command (sequentially)
 
